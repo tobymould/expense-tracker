@@ -1,8 +1,89 @@
 import React, { Component } from 'react';
 import styles from './Home.module.scss';
+import Card from '../Card';
+import { firestore } from '../../firebase';
 
 class Home extends Component {
+  state = {
+    expenses: ['test', 60],
+    expenseItem: null,
+    expenseValue: null
+  };
+
+  addToExpenseList = expense => {
+    firestore
+      .collection('expenses')
+      .doc(Math.floor(Math.random() * 1000 + 1))
+      .set(expense)
+      .then(response => console.log(response).catch(error => console.log(error)));
+  };
+
+  componentDidMount = async () => {
+    firestore
+      .collection('expenses')
+      .get()
+      .then(expensesListFirebase => {
+        const expenses = expensesListFirebase.docs.map(doc => doc.data());
+        this.setState({ expenses: expenses });
+      })
+      .catch(error => console.log(error));
+  };
+
+  removeFromExpenseList = expense => {
+    console.log('removing...');
+    firestore
+      .collection('expenses')
+      .doc(expense.id)
+      .delete()
+      .then(res => console.log(res))
+      .catch(error => console.log(error));
+  };
+
+  addCard = () => {
+    const { expenses } = this.state;
+    if (expenses) {
+      const test = expenses[0];
+      const entries = Object.entries(test);
+      return entries.map((expense, index) => {
+        // console.log(Math.sign(expense[1]));
+        // console.log(expense[1]);
+        let background = Math.sign(expense[1]) !== -1 ? '#2ecc71' : '#c0392b';
+        // console.log(background);
+        return <Card name={expense[0]} value={expense[1]} key={index} className={background} />;
+      });
+    }
+  };
+
+  stateToggle = event => {
+    console.log(event.target.name);
+    if (event.target.name === 'item') {
+      this.setState({ expenseItem: event.target.value });
+      console.log(this.state.expenseItem);
+    } else if (event.target.name === 'value') {
+      this.setState({ expenseValue: event.target.value });
+      console.log(this.state.expenseValue);
+    }
+  };
+
+  onSubmit = event => {
+    event.preventDefault();
+    const { expenseItem, expenseValue } = this.state;
+    const currentDate = new Date().toUTCString();
+    const expense = { [expenseItem]: expenseValue, currentDate: currentDate };
+    console.log(expense);
+    this.addToExpenseList(expense);
+  };
+
+  income = () => {
+    const { expenses } = this.state;
+    const test = expenses[0];
+    const entries = Object.entries(test);
+    console.log(entries);
+    // let background = Math.sign(expense[1]) !== -1 ? '#2ecc71' : '#c0392b';
+  };
+
   render() {
+    const { expenses } = this.state;
     return (
       <div className={styles.AppWrapper}>
         <section className={styles.balance}>
@@ -12,27 +93,29 @@ class Home extends Component {
           <div className={styles.incomeExpense}>
             <div className={styles.income}>
               <h4>INCOME</h4>
-              <p>+£0.00</p>
+              {/* <p>+{£0.00}</p> */}
             </div>
             <div className={styles.expense}>
               <h4>EXPENSE</h4>
-              <p>-£0.00</p>
+              {/* <p>-{£0.00}</p> */}
             </div>
           </div>
         </section>
         <section className={styles.history}>
           <h4>History</h4>
-          <ul></ul>
+          {/* <Card className={styles.plus} /> */}
+          {this.addCard()}
         </section>
         <section className={styles.addTransaction}>
           <h4>Add new transaction</h4>
-          <p>Text</p>
-          <input type="text" />
-          <p>
-            Amount <br /> (negative - expense, positive - income
-          </p>
-          <input type="number" />
-          <button> Add transaction</button>
+          <form onSubmit={this.handleSubmit}>
+            <input type="text" name="item" placeholder="expense item name..." onInput={this.stateToggle} />
+            {/* <p>
+              Amount <br /> (negative - expense, positive - income
+            </p> */}
+            <input type="number" name="value" placeholder="expense item value..." onInput={this.stateToggle} />
+            <input type="submit" />
+          </form>
         </section>
       </div>
     );
