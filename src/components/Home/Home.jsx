@@ -11,14 +11,17 @@ class Home extends Component {
   };
 
   addToExpenseList = expense => {
+    const randomID = Math.floor(Math.random() * 1000 + 1).toString();
+    console.log(randomID);
     firestore
       .collection('expenses')
-      .doc(Math.floor(Math.random() * 1000 + 1))
+      .doc(randomID)
       .set(expense)
-      .then(response => console.log(response).catch(error => console.log(error)));
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
   };
 
-  componentDidMount = async () => {
+  componentDidMount = () => {
     firestore
       .collection('expenses')
       .get()
@@ -65,7 +68,7 @@ class Home extends Component {
     }
   };
 
-  onSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault();
     const { expenseItem, expenseValue } = this.state;
     const currentDate = new Date().toUTCString();
