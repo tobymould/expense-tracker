@@ -19,8 +19,8 @@ class Home extends Component {
     // const hello = expense;
     firestore
       .collection('expenses')
-      .doc(randomID)
-      .set(expense)
+      .doc('Toby')
+      .update(expense)
       .then(response => console.log(response))
       .catch(error => console.log(error));
   };
