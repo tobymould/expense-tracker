@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from './Home.module.scss';
 import Card from '../Card';
 import firebase from '../../firebase';
-
+import * as admin from 'firebase-admin';
 import { firestore } from '../../firebase';
 
 class Home extends Component {
@@ -13,6 +13,19 @@ class Home extends Component {
   };
 
   addToExpenseList = expense => {
+    const randomID = Math.floor(Math.random() * 1000 + 1).toString();
+    // console.log(randomID);
+    // const { expenses } = this.state;
+    // const hello = expense;
+    firestore
+      .collection('expenses')
+      .doc(randomID)
+      .set(expense)
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
+  };
+
+  updateOnExpenseList = expense => {
     const randomID = Math.floor(Math.random() * 1000 + 1).toString();
     // console.log(randomID);
     // const { expenses } = this.state;
@@ -37,12 +50,13 @@ class Home extends Component {
       .catch(error => console.log(error));
   };
 
-  removeFromExpenseList = expense => {
+  deleteFromExpenseList = expense => {
     console.log('removing...');
+    const fieldValue = admin.firestore.FieldValue;
     firestore
       .collection('expenses')
-      .doc(expense.id)
-      .delete()
+      .doc('Toby')
+      .update({ camera: fieldValue.delete() })
       .then(res => console.log(res))
       .catch(error => console.log(error));
   };
@@ -82,7 +96,7 @@ class Home extends Component {
     // const expense = { [expenseItem]: expenseValue, currentDate: currentDate };
     const expense = { [expenseItem]: expenseValue };
     console.log(expense);
-    this.addToExpenseList(expense);
+    this.updateOnExpenseList(expense);
   };
 
   income = () => {
