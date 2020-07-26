@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import styles from './Home.module.scss';
 import Card from '../Card';
+import firebase from '../../firebase';
+
 import { firestore } from '../../firebase';
 
 class Home extends Component {
   state = {
-    expenses: ['test', 60],
+    expenses: null,
     expenseItem: null,
     expenseValue: null
   };
 
   addToExpenseList = expense => {
     const randomID = Math.floor(Math.random() * 1000 + 1).toString();
-    console.log(randomID);
+    // console.log(randomID);
+    // const { expenses } = this.state;
+    // const hello = expense;
     firestore
       .collection('expenses')
       .doc(randomID)
@@ -28,6 +32,7 @@ class Home extends Component {
       .then(expensesListFirebase => {
         const expenses = expensesListFirebase.docs.map(doc => doc.data());
         this.setState({ expenses: expenses });
+        console.log(this.state.expenses);
       })
       .catch(error => console.log(error));
   };
@@ -71,8 +76,11 @@ class Home extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { expenseItem, expenseValue } = this.state;
-    const currentDate = new Date().toUTCString();
-    const expense = { [expenseItem]: expenseValue, currentDate: currentDate };
+    // const currentDate = new Date().toUTCString();
+    // const randomID = Math.floor(Math.random() * 1000 + 1).toString();
+
+    // const expense = { [expenseItem]: expenseValue, currentDate: currentDate };
+    const expense = { [expenseItem]: expenseValue };
     console.log(expense);
     this.addToExpenseList(expense);
   };
