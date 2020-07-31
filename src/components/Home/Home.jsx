@@ -112,12 +112,27 @@ class Home extends Component {
   };
 
   income = () => {
-    const { expenses } = this.state;
-    const test = expenses[0];
-    const entries = Object.entries(test);
-    console.log(entries);
-    console.log(test);
-    // let background = Math.sign(expense[1]) !== -1 ? '#2ecc71' : '#c0392b';
+    let income = 0;
+    const userExpensesArrayOfArrays = Object.entries(this.state.expenses[0]);
+
+    userExpensesArrayOfArrays.map(singularExpenseKeyValuePair => {
+      const value = Number(singularExpenseKeyValuePair[1]);
+      return Math.sign(value) !== -1 ? (income += value) : null;
+    });
+
+    return income;
+  };
+
+  expense = () => {
+    let expense = 0;
+    const userExpensesArrayOfArrays = Object.entries(this.state.expenses[0]);
+
+    userExpensesArrayOfArrays.map(singularExpenseKeyValuePair => {
+      const value = Number(singularExpenseKeyValuePair[1]);
+      return Math.sign(value) !== -1 ? null : (expense += value);
+    });
+
+    return Math.abs(expense);
   };
 
   render() {
@@ -131,12 +146,11 @@ class Home extends Component {
           <div className={styles.incomeExpense}>
             <div className={styles.income}>
               <h4>INCOME</h4>
-              {/* <p>+£{0.0}</p> */}
-              {this.income}
+              <p>+£{expenses ? this.income() : 0.0}</p>
             </div>
             <div className={styles.expense}>
               <h4>EXPENSE</h4>
-              <p>-£{0.0}</p>
+              <p>-£{expenses ? this.expense() : 0.0}</p>
             </div>
           </div>
         </section>
