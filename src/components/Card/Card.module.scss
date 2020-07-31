@@ -2,31 +2,47 @@
 
 .cardWrapper {
   display: flex;
-  // justify-content: space-between;
   align-items: center;
-  width: 100%;
-  box-shadow: $box-shadow;
-  margin: 10px 0;
-  // padding: 5px 0 5px 5px;
+  justify-content: center;
 
-  div {
-    &:nth-of-type(1) {
-      // background: blue;
-      margin: 5px;
-      width: 60%;
-    }
-    &:nth-of-type(2) {
-      // background: green;
-      text-align: end;
-      // justify-text: end;
-      width: 38%;
-      margin: 5px;
-    }
+  .card {
+    display: flex;
+    // justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-shadow: $box-shadow;
+    margin: 10px 0;
+    cursor: pointer;
+    // padding: 5px 0 5px 5px;
 
-    &:nth-of-type(3) {
-      // background: blue;
-      width: 2%;
-      height: 30px;
+    div {
+      &:nth-of-type(1) {
+        // background: blue;
+        margin: 5px;
+        width: 60%;
+      }
+      &:nth-of-type(2) {
+        // background: green;
+        text-align: end;
+        // justify-text: end;
+        width: 38%;
+        margin: 5px;
+      }
+
+      &:nth-of-type(3) {
+        // background: blue;
+        width: 2%;
+        height: 30px;
+      }
     }
+  }
+  .delete {
+    width: 15px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // margin: 20px;
+    // background: $minus;
   }
 }

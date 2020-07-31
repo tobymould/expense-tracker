@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styles from './Home.module.scss';
 import Card from '../Card';
-import firebase from '../../firebase';
-import * as admin from 'firebase-admin';
-import { firestore } from '../../firebase';
+// import firebase from '../../firebase';
+// import * as admin from 'firebase-admin';
+import firebase, { firestore } from '../../firebase';
 
 class Home extends Component {
   state = {
@@ -12,7 +12,7 @@ class Home extends Component {
     expenseValue: null
   };
 
-  addToExpenseList = expense => {
+  addToExpenseList = async expense => {
     const randomID = Math.floor(Math.random() * 1000 + 1).toString();
     // console.log(randomID);
     // const { expenses } = this.state;
@@ -23,9 +23,11 @@ class Home extends Component {
       .set(expense)
       .then(response => console.log(response))
       .catch(error => console.log(error));
+
+    await this.fetchFirebaseData();
   };
 
-  updateOnExpenseList = expense => {
+  updateOnExpenseList = async expense => {
     const randomID = Math.floor(Math.random() * 1000 + 1).toString();
     // console.log(randomID);
     // const { expenses } = this.state;
@@ -36,9 +38,15 @@ class Home extends Component {
       .update(expense)
       .then(response => console.log(response))
       .catch(error => console.log(error));
+
+    await this.fetchFirebaseData();
   };
 
   componentDidMount = () => {
+    this.fetchFirebaseData();
+  };
+
+  fetchFirebaseData = () => {
     firestore
       .collection('expenses')
       .get()
@@ -50,15 +58,19 @@ class Home extends Component {
       .catch(error => console.log(error));
   };
 
-  deleteFromExpenseList = expense => {
+  deleteFromExpenseList = async event => {
     console.log('removing...');
-    const fieldValue = admin.firestore.FieldValue;
-    firestore
+    const nameOfItem = event.target.parentElement.children[0].children[0].innerText;
+    const FieldValue = firebase.firestore.FieldValue;
+    // console.log({ [nameOfItem]: 'hello' });
+    const res = await firestore
       .collection('expenses')
       .doc('Toby')
-      .update({ camera: fieldValue.delete() })
-      .then(res => console.log(res))
-      .catch(error => console.log(error));
+      .update({ [nameOfItem]: FieldValue.delete() });
+
+    await this.fetchFirebaseData();
+
+    // await try-catch
   };
 
   addCard = () => {
@@ -71,7 +83,7 @@ class Home extends Component {
         // console.log(expense[1]);
         let background = Math.sign(expense[1]) !== -1 ? '#2ecc71' : '#c0392b';
         // console.log(background);
-        return <Card name={expense[0]} value={expense[1]} key={index} className={background} />;
+        return <Card name={expense[0]} value={expense[1]} key={index} className={background} deleteFromExpenseList={this.deleteFromExpenseList} />;
       });
     }
   };
@@ -104,6 +116,7 @@ class Home extends Component {
     const test = expenses[0];
     const entries = Object.entries(test);
     console.log(entries);
+    console.log(test);
     // let background = Math.sign(expense[1]) !== -1 ? '#2ecc71' : '#c0392b';
   };
 
@@ -118,11 +131,12 @@ class Home extends Component {
           <div className={styles.incomeExpense}>
             <div className={styles.income}>
               <h4>INCOME</h4>
-              {/* <p>+{£0.00}</p> */}
+              {/* <p>+£{0.0}</p> */}
+              {this.income}
             </div>
             <div className={styles.expense}>
               <h4>EXPENSE</h4>
-              {/* <p>-{£0.00}</p> */}
+              <p>-£{0.0}</p>
             </div>
           </div>
         </section>
