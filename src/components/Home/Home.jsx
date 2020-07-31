@@ -184,8 +184,12 @@ class Home extends Component {
     const income = this.income();
     const expense = this.expense();
     const total = income - expense;
-
-    return total.toFixed(2);
+    // console.log(Math.sign(total));
+    if (Math.sign(total) === -1) {
+      return <h2 style={{ color: '#c0392b' }}>{total.toFixed(2)}</h2>;
+    } else if (Math.sign(total) === 1) {
+      return <h2 style={{ color: '#2ecc71' }}>{total.toFixed(2)}</h2>;
+    } else return <h2 style={{ color: 'orange' }}>{total.toFixed(2)}</h2>;
   };
 
   render() {
@@ -195,7 +199,7 @@ class Home extends Component {
         <section className={styles.balance}>
           <h3>Expense Tracker</h3>
           <h4>YOUR BALANCE</h4>
-          <h2>{expenses ? this.yourBalance() : 0.0}</h2>
+          {expenses ? this.yourBalance() : <h2>0.0</h2>}
           <div className={styles.incomeExpense}>
             <div className={styles.income}>
               <h4>INCOME</h4>
@@ -213,6 +217,7 @@ class Home extends Component {
         </section>
         <section className={styles.addTransaction}>
           <h4>Add New Transaction</h4>
+
           <form onSubmit={this.handleSubmit}>
             <input type="text" name="item" placeholder="Name of income stream or expense..." onInput={this.stateToggle} />
             <input type="number" step="0.01" name="value" placeholder="Income/expense value... (use the '-' prefix for 'expenses')" onInput={this.stateToggle} />
