@@ -186,9 +186,9 @@ class Home extends Component {
     const total = income - expense;
     // console.log(Math.sign(total));
     if (Math.sign(total) === -1) {
-      return <h2 style={{ color: '#c0392b' }}>{total.toFixed(2)}</h2>;
+      return <h2 style={{ color: '#c0392b' }}>-£{Math.abs(total.toFixed(2))}</h2>;
     } else if (Math.sign(total) === 1) {
-      return <h2 style={{ color: '#2ecc71' }}>{total.toFixed(2)}</h2>;
+      return <h2 style={{ color: '#2ecc71' }}>£{total.toFixed(2)}</h2>;
     } else return <h2 style={{ color: 'orange' }}>{total.toFixed(2)}</h2>;
   };
 

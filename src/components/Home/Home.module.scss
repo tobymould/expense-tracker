@@ -114,12 +114,13 @@ body {
       height: 30px;
     }
 
-    button {
+    input[type='submit'] {
       width: 100%;
       height: 30px;
       margin: 10px 0;
       background: $button;
       color: white;
+      cursor: pointer;
     }
   }
 
@@ -140,6 +141,7 @@ body {
         background: black;
         color: white;
         width: 50%;
+        cursor: pointer;
       }
     }
   }
