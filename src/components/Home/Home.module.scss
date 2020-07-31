@@ -15,14 +15,15 @@ body {
   // border: 1px solid blue;
   font-family: 'Lato', sans-serif;
   // padding: 20px;
+  // background: black;
 }
 
 .AppWrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 20px 20px;
-  height: 95vh;
+  padding: 10px 20px 0px;
+  height: 100vh;
   // border: 1px solid black;
   border-radius: 10px;
   box-shadow: $box-shadow;
@@ -102,12 +103,13 @@ body {
 
   .addTransaction {
     margin: 20px 0;
+
     h4 {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     input {
-      margin: 10px 0;
+      margin: 5px 0;
       width: 100%;
       height: 30px;
     }
@@ -118,6 +120,25 @@ body {
       margin: 10px 0;
       background: $button;
       color: white;
+    }
+  }
+
+  .navBar {
+    // display: flex;
+    // background: black;
+    // height: 5vh;
+    // padding: 10px;
+    ul {
+      list-style-type: none;
+      display: flex;
+      justify-content: center;
+      li {
+        text-align: center;
+        padding: 5px;
+        background: black;
+        color: white;
+        width: 50%;
+      }
     }
   }
 }

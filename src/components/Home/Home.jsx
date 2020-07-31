@@ -3,15 +3,44 @@ import styles from './Home.module.scss';
 import Card from '../Card';
 // import firebase from '../../firebase';
 // import * as admin from 'firebase-admin';
-import firebase, { firestore } from '../../firebase';
+import firebase, { firestore, provider } from '../../firebase';
 
 class Home extends Component {
   state = {
+    user: null,
     expenses: null,
     expenseItem: null,
     expenseValue: null,
     incomeTotal: null,
     expenseTotal: null
+  };
+
+  signIn = () => {
+    firebase.auth().signInWithRedirect(provider);
+  };
+
+  signOut = () => {
+    firebase.auth().signOut();
+  };
+
+  getUser = () => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ user: user });
+      } else {
+        this.setState({ user: null });
+      }
+    });
+  };
+
+  getSignInOutJsx = () => {
+    const { user } = this.state;
+    const { signIn } = this;
+    if (user) {
+      return <li onClick={this.signOut}>Sign-Out</li>;
+    } else {
+      return <li onClick={this.signIn}>Sign-in</li>;
+    }
   };
 
   addToExpenseList = async expense => {
@@ -46,6 +75,7 @@ class Home extends Component {
 
   componentDidMount = () => {
     this.fetchFirebaseData();
+    this.getUser();
   };
 
   fetchFirebaseData = () => {
@@ -172,13 +202,13 @@ class Home extends Component {
           <h4>Add New Transaction</h4>
           <form onSubmit={this.handleSubmit}>
             <input type="text" name="item" placeholder="Name of income stream or expense..." onInput={this.stateToggle} />
-            {/* <p>
-              Amount <br /> (negative - expense, positive - income
-            </p> */}
             <input type="number" step="0.01" name="value" placeholder="Income/expense value... (use the '-' prefix for 'expenses')" onInput={this.stateToggle} />
             <input type="submit" value="Add Transaction" />
           </form>
         </section>
+        <nav className={styles.navBar}>
+          <ul>{this.getSignInOutJsx()}</ul>
+        </nav>
       </div>
     );
   }
