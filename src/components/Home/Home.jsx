@@ -9,7 +9,9 @@ class Home extends Component {
   state = {
     expenses: null,
     expenseItem: null,
-    expenseValue: null
+    expenseValue: null,
+    incomeTotal: null,
+    expenseTotal: null
   };
 
   addToExpenseList = async expense => {
@@ -116,10 +118,10 @@ class Home extends Component {
     const userExpensesArrayOfArrays = Object.entries(this.state.expenses[0]);
 
     userExpensesArrayOfArrays.map(singularExpenseKeyValuePair => {
-      const value = Number(singularExpenseKeyValuePair[1]);
+      const value = parseFloat(singularExpenseKeyValuePair[1]);
       return Math.sign(value) !== -1 ? (income += value) : null;
     });
-
+    // this.setState({ incomeTotal: income });
     return income;
   };
 
@@ -128,21 +130,29 @@ class Home extends Component {
     const userExpensesArrayOfArrays = Object.entries(this.state.expenses[0]);
 
     userExpensesArrayOfArrays.map(singularExpenseKeyValuePair => {
-      const value = Number(singularExpenseKeyValuePair[1]);
+      const value = parseFloat(singularExpenseKeyValuePair[1]);
       return Math.sign(value) !== -1 ? null : (expense += value);
     });
-
+    // this.setState({ expenseTotal: Math.abs(expense) });
     return Math.abs(expense);
   };
 
+  yourBalance = () => {
+    const income = this.income();
+    const expense = this.expense();
+    const total = income - expense;
+
+    return total.toFixed(2);
+  };
+
   render() {
-    const { expenses } = this.state;
+    const { expenses, incomeTotal, expenseTotal } = this.state;
     return (
       <div className={styles.AppWrapper}>
         <section className={styles.balance}>
           <h3>Expense Tracker</h3>
           <h4>YOUR BALANCE</h4>
-          <p>£0.00</p>
+          <h2>{expenses ? this.yourBalance() : 0.0}</h2>
           <div className={styles.incomeExpense}>
             <div className={styles.income}>
               <h4>INCOME</h4>
@@ -156,18 +166,17 @@ class Home extends Component {
         </section>
         <section className={styles.history}>
           <h4>History</h4>
-          {/* <Card className={styles.plus} /> */}
-          {this.addCard()}
+          <div className={styles.list}>{this.addCard()}</div>
         </section>
         <section className={styles.addTransaction}>
-          <h4>Add new transaction</h4>
+          <h4>Add New Transaction</h4>
           <form onSubmit={this.handleSubmit}>
-            <input type="text" name="item" placeholder="expense item name..." onInput={this.stateToggle} />
+            <input type="text" name="item" placeholder="Name of income stream or expense..." onInput={this.stateToggle} />
             {/* <p>
               Amount <br /> (negative - expense, positive - income
             </p> */}
-            <input type="number" name="value" placeholder="expense item value..." onInput={this.stateToggle} />
-            <input type="submit" />
+            <input type="number" step="0.01" name="value" placeholder="Income/expense value... (use the '-' prefix for 'expenses')" onInput={this.stateToggle} />
+            <input type="submit" value="Add Transaction" />
           </form>
         </section>
       </div>
