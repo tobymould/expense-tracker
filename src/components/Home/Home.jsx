@@ -19,14 +19,18 @@ class Home extends Component {
     firebase.auth().signInWithRedirect(provider);
   };
 
-  signOut = () => {
+  signOut = async () => {
     firebase.auth().signOut();
+    await this.getUser();
+    this.setState({
+      expenses: null
+    });
   };
 
   getUser = () => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.setState({ user: user });
+        this.setState({ user: user }, this.fetchFirebaseData);
       } else {
         this.setState({ user: null });
       }
@@ -44,13 +48,16 @@ class Home extends Component {
   };
 
   addToExpenseList = async expense => {
-    const randomID = Math.floor(Math.random() * 1000 + 1).toString();
+    // const randomID = Math.floor(Math.random() * 1000 + 1).toString();
     // console.log(randomID);
     // const { expenses } = this.state;
     // const hello = expense;
+    const userEmail = this.state.user.email;
+
+    console.log('expense-SET', expense);
     firestore
       .collection('expenses')
-      .doc(randomID)
+      .doc(userEmail)
       .set(expense)
       .then(response => console.log(response))
       .catch(error => console.log(error));
@@ -59,13 +66,13 @@ class Home extends Component {
   };
 
   updateOnExpenseList = async expense => {
-    const randomID = Math.floor(Math.random() * 1000 + 1).toString();
-    // console.log(randomID);
     // const { expenses } = this.state;
-    // const hello = expense;
+
+    const userEmail = this.state.user.email;
+    console.log('expense-UPDATE', expense);
     firestore
       .collection('expenses')
-      .doc('Toby')
+      .doc(userEmail)
       .update(expense)
       .then(response => console.log(response))
       .catch(error => console.log(error));
@@ -74,18 +81,22 @@ class Home extends Component {
   };
 
   componentDidMount = () => {
-    this.fetchFirebaseData();
     this.getUser();
   };
 
-  fetchFirebaseData = () => {
+  fetchFirebaseData = async () => {
+    const userEmail = this.state.user.email;
+    console.log('userEmail', userEmail);
+
     firestore
       .collection('expenses')
+      .doc(userEmail)
       .get()
       .then(expensesListFirebase => {
-        const expenses = expensesListFirebase.docs.map(doc => doc.data());
+        console.log(expensesListFirebase.data());
+        const expenses = expensesListFirebase.data();
+        console.log(expenses);
         this.setState({ expenses: expenses });
-        console.log(this.state.expenses);
       })
       .catch(error => console.log(error));
   };
@@ -94,10 +105,11 @@ class Home extends Component {
     console.log('removing...');
     const nameOfItem = event.target.parentElement.children[0].children[0].innerText;
     const FieldValue = firebase.firestore.FieldValue;
-    // console.log({ [nameOfItem]: 'hello' });
+    const userEmail = this.state.user.email;
+
     const res = await firestore
       .collection('expenses')
-      .doc('Toby')
+      .doc(userEmail)
       .update({ [nameOfItem]: FieldValue.delete() });
 
     await this.fetchFirebaseData();
@@ -107,14 +119,13 @@ class Home extends Component {
 
   addCard = () => {
     const { expenses } = this.state;
+    console.log(expenses);
+    console.log(Object.entries(expenses));
+
     if (expenses) {
-      const test = expenses[0];
-      const entries = Object.entries(test);
+      const entries = Object.entries(expenses);
       return entries.map((expense, index) => {
-        // console.log(Math.sign(expense[1]));
-        // console.log(expense[1]);
         let background = Math.sign(expense[1]) !== -1 ? '#2ecc71' : '#c0392b';
-        // console.log(background);
         return <Card name={expense[0]} value={expense[1]} key={index} className={background} deleteFromExpenseList={this.deleteFromExpenseList} />;
       });
     }
@@ -133,37 +144,39 @@ class Home extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { expenseItem, expenseValue } = this.state;
+    const { expenseItem, expenseValue, expenses } = this.state;
     // const currentDate = new Date().toUTCString();
-    // const randomID = Math.floor(Math.random() * 1000 + 1).toString();
+    const entries = Object.entries(expenses);
+    console.log('entries', entries);
+    const alreadyExistCheck = entries.map(entry => {
+      const check = entry[0].includes(expenseItem);
+      return check;
+    });
+    const newState = { ...this.state.expenses, [expenseItem]: expenseValue };
+    console.log('check me', newState);
 
-    // const expense = { [expenseItem]: expenseValue, currentDate: currentDate };
-    const expense = { [expenseItem]: expenseValue };
-    console.log(expense);
-    this.updateOnExpenseList(expense);
+    alreadyExistCheck.includes(true) ? this.updateOnExpenseList(newState) : this.addToExpenseList(newState);
   };
 
   income = () => {
     let income = 0;
-    const userExpensesArrayOfArrays = Object.entries(this.state.expenses[0]);
+    const userExpensesArrayOfArrays = Object.entries(this.state.expenses);
 
     userExpensesArrayOfArrays.map(singularExpenseKeyValuePair => {
       const value = parseFloat(singularExpenseKeyValuePair[1]);
       return Math.sign(value) !== -1 ? (income += value) : null;
     });
-    // this.setState({ incomeTotal: income });
     return income;
   };
 
   expense = () => {
     let expense = 0;
-    const userExpensesArrayOfArrays = Object.entries(this.state.expenses[0]);
+    const userExpensesArrayOfArrays = Object.entries(this.state.expenses);
 
     userExpensesArrayOfArrays.map(singularExpenseKeyValuePair => {
       const value = parseFloat(singularExpenseKeyValuePair[1]);
       return Math.sign(value) !== -1 ? null : (expense += value);
     });
-    // this.setState({ expenseTotal: Math.abs(expense) });
     return Math.abs(expense);
   };
 
@@ -196,7 +209,7 @@ class Home extends Component {
         </section>
         <section className={styles.history}>
           <h4>History</h4>
-          <div className={styles.list}>{this.addCard()}</div>
+          <div className={styles.list}>{expenses ? this.addCard() : null}</div>
         </section>
         <section className={styles.addTransaction}>
           <h4>Add New Transaction</h4>
@@ -209,6 +222,7 @@ class Home extends Component {
         <nav className={styles.navBar}>
           <ul>{this.getSignInOutJsx()}</ul>
         </nav>
+        {/* {this.state.user ? console.log(this.state.user.email) : null}; */}
       </div>
     );
   }
