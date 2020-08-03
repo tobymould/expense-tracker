@@ -8,7 +8,7 @@ import firebase, { firestore, provider } from '../../firebase';
 class Home extends Component {
   state = {
     user: null,
-    expenses: null,
+    expenses: {},
     expenseItem: null,
     expenseValue: null,
     incomeTotal: null,
@@ -146,16 +146,24 @@ class Home extends Component {
     event.preventDefault();
     const { expenseItem, expenseValue, expenses } = this.state;
     // const currentDate = new Date().toUTCString();
-    const entries = Object.entries(expenses);
-    console.log('entries', entries);
-    const alreadyExistCheck = entries.map(entry => {
-      const check = entry[0].includes(expenseItem);
-      return check;
-    });
-    const newState = { ...this.state.expenses, [expenseItem]: expenseValue };
-    console.log('check me', newState);
+    if (expenses) {
+      const entries = Object.entries(expenses);
+      console.log('entries', entries);
+      const alreadyExistCheck = entries.map(entry => {
+        const check = entry[0].includes(expenseItem);
+        return check;
+      });
 
-    alreadyExistCheck.includes(true) ? this.updateOnExpenseList(newState) : this.addToExpenseList(newState);
+      const newState = { ...this.state.expenses, [expenseItem]: expenseValue };
+      console.log('check me', newState);
+
+      alreadyExistCheck.includes(true) ? this.updateOnExpenseList(newState) : this.addToExpenseList(newState);
+    } else {
+      const newState = { ...this.state.expenses, [expenseItem]: expenseValue };
+      console.log('check me', newState);
+
+      this.addToExpenseList(newState);
+    }
   };
 
   income = () => {
