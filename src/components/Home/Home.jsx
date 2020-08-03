@@ -196,37 +196,49 @@ class Home extends Component {
     const { expenses, incomeTotal, expenseTotal } = this.state;
     return (
       <div className={styles.AppWrapper}>
-        <section className={styles.balance}>
-          <h3>Expense Tracker</h3>
-          <h4>YOUR BALANCE</h4>
-          {expenses ? this.yourBalance() : <h2>0.0</h2>}
-          <div className={styles.incomeExpense}>
-            <div className={styles.income}>
-              <h4>INCOME</h4>
-              <p>+£{expenses ? this.income() : 0.0}</p>
-            </div>
-            <div className={styles.expense}>
-              <h4>EXPENSE</h4>
-              <p>-£{expenses ? this.expense() : 0.0}</p>
-            </div>
+        <h3>Expense Tracker</h3>
+
+        <div className={styles.analyticsSection}>
+          <div className={styles.column1}>
+            <section className={styles.balance}>
+              <div>
+                <h4>YOUR BALANCE</h4>
+                {expenses ? this.yourBalance() : <h2>0.0</h2>}
+              </div>
+              <nav className={styles.navBar}>
+                <ul>{this.getSignInOutJsx()}</ul>
+              </nav>
+            </section>
+
+            <section>
+              <div className={styles.incomeExpense}>
+                <div className={styles.income}>
+                  <h4>INCOME</h4>
+                  <p>+£{expenses ? this.income() : 0.0}</p>
+                </div>
+                <div className={styles.expense}>
+                  <h4>EXPENSE</h4>
+                  <p>-£{expenses ? this.expense() : 0.0}</p>
+                </div>
+              </div>
+            </section>
           </div>
-        </section>
-        <section className={styles.history}>
-          <h4>History</h4>
-          <div className={styles.list}>{expenses ? this.addCard() : null}</div>
-        </section>
+
+          <section className={styles.history}>
+            <h4>History</h4>
+            <div className={styles.list}>{expenses ? this.addCard() : null}</div>
+          </section>
+        </div>
+
         <section className={styles.addTransaction}>
           <h4>Add New Transaction</h4>
-
           <form onSubmit={this.handleSubmit}>
             <input type="text" name="item" placeholder="Name of income stream or expense..." onInput={this.stateToggle} />
             <input type="number" step="0.01" name="value" placeholder="Income/expense value... (use the '-' prefix for 'expenses')" onInput={this.stateToggle} />
             <input type="submit" value="Add Transaction" />
           </form>
         </section>
-        <nav className={styles.navBar}>
-          <ul>{this.getSignInOutJsx()}</ul>
-        </nav>
+
         {/* {this.state.user ? console.log(this.state.user.email) : null}; */}
       </div>
     );

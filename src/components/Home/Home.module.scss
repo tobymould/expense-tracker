@@ -11,7 +11,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   // border: 1px solid blue;
   font-family: 'Lato', sans-serif;
   // padding: 20px;
@@ -19,14 +18,15 @@ body {
 }
 
 .AppWrapper {
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 10px 20px 0px;
-  height: 100vh;
+  // height: 100vh;
   // border: 1px solid black;
   border-radius: 10px;
-  box-shadow: $box-shadow;
+  // box-shadow: $box-shadow;
   margin: 0 auto;
 
   h3 {
@@ -43,57 +43,88 @@ body {
   }
 
   .balance {
-    padding: 20px 0;
+    padding: 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 
     h2 {
       font-size: 2rem;
     }
 
-    .incomeExpense {
-      margin-top: 20px;
-      // padding-top: 20px 0;
-      box-shadow: $box-shadow;
-      display: flex;
-      justify-items: center;
-      align-items: center;
+    .navBar {
+      // display: flex;
+      // background: black;
+      // height: 5vh;
+      // padding: 10px;
+      // background: blue;
 
-      div {
-        text-align: center;
-        padding: 20px;
-        width: 50%;
-      }
+      ul {
+        list-style-type: none;
+        display: flex;
+        justify-content: center;
 
-      .income {
-        border-right: 1px solid grey;
-        padding: 0px;
-        margin-left: 10px;
-
-        p {
-          color: $plus;
-          // background: blue;
+        li {
+          border-radius: 20px;
+          text-align: center;
+          padding: 5px 10px;
+          background: black;
+          color: white;
+          width: 100%;
+          cursor: pointer;
         }
-      }
-
-      .expense {
-        margin-right: 10px;
-
-        p {
-          color: $minus;
-        }
-      }
-
-      h4 {
-        border: none;
       }
     }
   }
 
+  .incomeExpense {
+    margin-top: 10px;
+    // padding-top: 20px 0;
+    box-shadow: $box-shadow;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+
+    div {
+      text-align: center;
+      padding: 20px;
+      width: 50%;
+    }
+
+    .income {
+      border-right: 1px solid grey;
+      padding: 0px;
+      margin-left: 10px;
+
+      p {
+        color: $plus;
+        // background: blue;
+      }
+    }
+
+    .expense {
+      margin-right: 10px;
+
+      p {
+        color: $minus;
+      }
+    }
+
+    h4 {
+      border: none;
+    }
+  }
+
   .history {
+    margin-top: 20px;
+
     h4 {
       margin-bottom: 10px;
     }
+
     .list {
-      padding: 20px;
+      padding: 15px;
+      border: 5px solid whitesmoke;
       height: 30vh;
       overflow-y: scroll;
       box-shadow: $box-shadow;
@@ -102,7 +133,7 @@ body {
   }
 
   .addTransaction {
-    margin: 20px 0;
+    margin: 20px 0 0;
 
     h4 {
       margin-bottom: 10px;
@@ -112,6 +143,8 @@ body {
       margin: 5px 0;
       width: 100%;
       height: 30px;
+      border-radius: 20px;
+      padding: 0 20px;
     }
 
     input[type='submit'] {
@@ -124,25 +157,260 @@ body {
     }
   }
 
-  .navBar {
-    // display: flex;
-    // background: black;
-    // height: 5vh;
-    // padding: 10px;
+  // --------------------------------------------------------------------------
 
-    ul {
-      list-style-type: none;
-      display: flex;
-      justify-content: center;
+  // LANDSCAPE FORMATS
+  @media (orientation: landscape) {
+    @media (max-width: $iphone6-width-landscape) {
+      width: 100vw;
+      height: auto;
 
-      li {
-        text-align: center;
-        padding: 5px;
-        background: black;
-        color: white;
-        width: 50%;
-        cursor: pointer;
+      .analyticsSection {
+        // margin: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        // margin: 20px;
+        // background: blue;
+        height: 80vh;
+        align-items: center;
+        box-shadow: $box-shadow;
+
+        .column1 {
+          // padding: 0px;
+          // background: brown;
+
+          .balance {
+            flex-direction: column-reverse;
+            // background: pink;
+            width: 20vw;
+
+            div {
+              margin-bottom: 5px;
+            }
+
+            .navBar {
+              margin-bottom: 30px;
+            }
+          }
+
+          .incomeExpense {
+            flex-direction: column;
+            // background: yellow;
+            box-shadow: none;
+            width: 20vw;
+
+            div {
+              display: flex;
+              flex-direction: column;
+              width: 100%;
+            }
+
+            .income {
+              border-right: none;
+              margin-left: 0px;
+              // margin-bottom: 10px;
+            }
+
+            .expense {
+              margin-right: 0px;
+            }
+
+            h4 {
+              border: none;
+            }
+          }
+        }
       }
+
+      .history {
+        // height: 98%;
+        width: 65vw;
+        margin: 20px;
+        .list {
+          height: 75%;
+        }
+      }
+
+      .addTransaction {
+        // width: 80vw;
+        // margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        h4 {
+          display: inline-block;
+          text-align: left;
+        }
+
+        form {
+          width: 100%;
+          display: flex;
+          // justify-content: center;
+          align-items: center;
+          // background: blue;
+          // padding: 5px;
+
+          input {
+            margin: 0 5px;
+
+            &:first-of-type {
+              width: 50%;
+            }
+
+            &:nth-of-type(2) {
+              width: 30%;
+            }
+
+            &:last-of-type {
+              width: 20%;
+              padding: 0;
+            }
+          }
+
+          // background: blue;
+        }
+      }
+    }
+
+    @media (max-width: $iphoneX-width-landscape) {
+      width: 100vw;
+      height: auto;
+
+      .analyticsSection {
+        // margin: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        // margin: 20px;
+        // background: blue;
+        height: 80vh;
+        align-items: center;
+        box-shadow: $box-shadow;
+
+        .column1 {
+          // padding: 0px;
+          // background: brown;
+
+          .balance {
+            flex-direction: column-reverse;
+            // background: pink;
+            width: 20vw;
+
+            div {
+              margin-bottom: 5px;
+            }
+
+            .navBar {
+              margin-bottom: 30px;
+            }
+          }
+
+          .incomeExpense {
+            flex-direction: column;
+            // background: yellow;
+            box-shadow: none;
+            width: 20vw;
+
+            div {
+              display: flex;
+              flex-direction: column;
+              width: 100%;
+            }
+
+            .income {
+              border-right: none;
+              margin-left: 0px;
+              // margin-bottom: 10px;
+            }
+
+            .expense {
+              margin-right: 0px;
+            }
+
+            h4 {
+              border: none;
+            }
+          }
+        }
+      }
+
+      .history {
+        // height: 98%;
+        width: 65vw;
+        margin: 20px;
+        .list {
+          height: 75%;
+        }
+      }
+
+      .addTransaction {
+        // width: 80vw;
+        // margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        h4 {
+          display: inline-block;
+          text-align: left;
+        }
+
+        form {
+          width: 100%;
+          display: flex;
+          // justify-content: center;
+          align-items: center;
+          // background: blue;
+          // padding: 5px;
+
+          input {
+            margin: 0 5px;
+
+            &:first-of-type {
+              width: 50%;
+            }
+
+            &:nth-of-type(2) {
+              width: 30%;
+            }
+
+            &:last-of-type {
+              width: 20%;
+              padding: 0;
+            }
+          }
+
+          // background: blue;
+        }
+      }
+    }
+
+    @media (min-width: 813px) and (max-width: $ipad-width-landscape) {
+    }
+
+    @media (min-width: 1025px) and (max-width: $ipad-pro-width-landscape) {
+    }
+
+    @media (min-width: $desktop-min-width) {
+    }
+  }
+
+  // PORTRAIT FORMATS
+  @media (orientation: portrait) {
+    // Ipad
+    @media (min-width: $ipad-min-width) and (max-width: $ipad-max-width) {
+    }
+
+    // Ipad Pro
+    @media (min-width: $ipad-pro-min-width) and (max-width: $ipad-pro-max-width) {
+    }
+
+    // Desktop
+    @media (min-width: $desktop-min-width) {
     }
   }
 }
