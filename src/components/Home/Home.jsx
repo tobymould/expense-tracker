@@ -194,10 +194,36 @@ class Home extends Component {
     const total = income - expense;
     // console.log(Math.sign(total));
     if (Math.sign(total) === -1) {
-      return <h2 style={{ color: '#c0392b' }}>-£{Math.abs(total.toFixed(2))}</h2>;
+      return (
+        <h2 style={{ color: '#c0392b' }}>
+          -£
+          {Math.abs(
+            total
+              .toFixed(2)
+              .toString()
+              .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+          )}
+        </h2>
+      );
     } else if (Math.sign(total) === 1) {
-      return <h2 style={{ color: '#2ecc71' }}>£{total.toFixed(2)}</h2>;
-    } else return <h2 style={{ color: 'orange' }}>{total.toFixed(2)}</h2>;
+      return (
+        <h2 style={{ color: '#2ecc71' }}>
+          £
+          {total
+            .toFixed(2)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+        </h2>
+      );
+    } else
+      return (
+        <h2 style={{ color: 'orange' }}>
+          {total
+            .toFixed(2)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+        </h2>
+      );
   };
 
   render() {
@@ -222,11 +248,25 @@ class Home extends Component {
               <div className={styles.incomeExpense}>
                 <div className={styles.income}>
                   <h4>INCOME</h4>
-                  <p>+£{expenses ? this.income() : 0.0}</p>
+                  <p>
+                    +£
+                    {expenses
+                      ? this.income()
+                          .toString()
+                          .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+                      : 0.0}
+                  </p>
                 </div>
                 <div className={styles.expense}>
                   <h4>EXPENSE</h4>
-                  <p>-£{expenses ? this.expense() : 0.0}</p>
+                  <p>
+                    -£
+                    {expenses
+                      ? this.expense()
+                          .toString()
+                          .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+                      : 0.0}
+                  </p>
                 </div>
               </div>
             </section>

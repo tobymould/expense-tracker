@@ -1,0 +1,279 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Lato", sans-serif;
+}
+
+.AppWrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 20px 0px;
+  border-radius: 10px;
+  margin: 0 auto;
+}
+.AppWrapper h3 {
+  text-align: center;
+  margin: 10px 0 20px;
+}
+.AppWrapper h4 {
+  border-bottom: 1px solid grey;
+  padding-bottom: 5px;
+  display: inline-block;
+}
+.AppWrapper .balance {
+  padding: 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.AppWrapper .balance h2 {
+  font-size: 2rem;
+}
+.AppWrapper .balance .navBar ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+.AppWrapper .balance .navBar ul li {
+  border-radius: 20px;
+  text-align: center;
+  padding: 5px 10px;
+  background: black;
+  color: white;
+  width: 100%;
+  cursor: pointer;
+}
+.AppWrapper .incomeExpense {
+  margin-top: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+.AppWrapper .incomeExpense div {
+  text-align: center;
+  padding: 20px;
+  width: 50%;
+}
+.AppWrapper .incomeExpense .income {
+  border-right: 1px solid grey;
+  padding: 0px;
+  margin-left: 10px;
+}
+.AppWrapper .incomeExpense .income p {
+  color: #2ecc71;
+}
+.AppWrapper .incomeExpense .expense {
+  margin-right: 10px;
+}
+.AppWrapper .incomeExpense .expense p {
+  color: #c0392b;
+}
+.AppWrapper .incomeExpense h4 {
+  border: none;
+}
+.AppWrapper .history {
+  margin-top: 20px;
+}
+.AppWrapper .history h4 {
+  margin-bottom: 10px;
+}
+.AppWrapper .history .list {
+  padding: 15px;
+  border: 5px solid whitesmoke;
+  height: 30vh;
+  overflow-y: scroll;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 20px;
+}
+.AppWrapper .addTransaction {
+  margin: 20px 0 0;
+}
+.AppWrapper .addTransaction h4 {
+  margin-bottom: 10px;
+}
+.AppWrapper .addTransaction input {
+  margin: 5px 0;
+  width: 100%;
+  height: 30px;
+  border-radius: 20px;
+  padding: 0 20px;
+}
+.AppWrapper .addTransaction input[type=submit] {
+  width: 100%;
+  height: 30px;
+  margin: 10px 0;
+  background: #9c88ff;
+  color: white;
+  cursor: pointer;
+}
+@media (orientation: landscape) and (max-width: 667px) {
+  .AppWrapper {
+    width: 100vw;
+    height: auto;
+  }
+  .AppWrapper .analyticsSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 80vh;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+  .AppWrapper .analyticsSection .column1 .balance {
+    flex-direction: column-reverse;
+    width: 20vw;
+  }
+  .AppWrapper .analyticsSection .column1 .balance div {
+    margin-bottom: 5px;
+  }
+  .AppWrapper .analyticsSection .column1 .balance .navBar {
+    margin-bottom: 30px;
+  }
+  .AppWrapper .analyticsSection .column1 .incomeExpense {
+    flex-direction: column;
+    box-shadow: none;
+    width: 20vw;
+  }
+  .AppWrapper .analyticsSection .column1 .incomeExpense div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .AppWrapper .analyticsSection .column1 .incomeExpense .income {
+    border-right: none;
+    margin-left: 0px;
+  }
+  .AppWrapper .analyticsSection .column1 .incomeExpense .expense {
+    margin-right: 0px;
+  }
+  .AppWrapper .analyticsSection .column1 .incomeExpense h4 {
+    border: none;
+  }
+  .AppWrapper .history {
+    width: 65vw;
+    margin: 20px;
+  }
+  .AppWrapper .history .list {
+    height: 75%;
+  }
+  .AppWrapper .addTransaction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .AppWrapper .addTransaction h4 {
+    display: inline-block;
+    text-align: left;
+  }
+  .AppWrapper .addTransaction form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .AppWrapper .addTransaction form input {
+    margin: 0 5px;
+  }
+  .AppWrapper .addTransaction form input:first-of-type {
+    width: 50%;
+  }
+  .AppWrapper .addTransaction form input:nth-of-type(2) {
+    width: 30%;
+  }
+  .AppWrapper .addTransaction form input:last-of-type {
+    width: 20%;
+    padding: 0;
+  }
+}
+@media (orientation: landscape) and (max-width: 812px) {
+  .AppWrapper {
+    width: 100vw;
+    height: auto;
+  }
+  .AppWrapper .analyticsSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 80vh;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+  .AppWrapper .analyticsSection .column1 .balance {
+    flex-direction: column-reverse;
+    width: 20vw;
+  }
+  .AppWrapper .analyticsSection .column1 .balance div {
+    margin-bottom: 5px;
+  }
+  .AppWrapper .analyticsSection .column1 .balance .navBar {
+    margin-bottom: 30px;
+  }
+  .AppWrapper .analyticsSection .column1 .incomeExpense {
+    flex-direction: column;
+    box-shadow: none;
+    width: 20vw;
+  }
+  .AppWrapper .analyticsSection .column1 .incomeExpense div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .AppWrapper .analyticsSection .column1 .incomeExpense .income {
+    border-right: none;
+    margin-left: 0px;
+  }
+  .AppWrapper .analyticsSection .column1 .incomeExpense .expense {
+    margin-right: 0px;
+  }
+  .AppWrapper .analyticsSection .column1 .incomeExpense h4 {
+    border: none;
+  }
+  .AppWrapper .history {
+    width: 65vw;
+    margin: 20px;
+  }
+  .AppWrapper .history .list {
+    height: 75%;
+  }
+  .AppWrapper .addTransaction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .AppWrapper .addTransaction h4 {
+    display: inline-block;
+    text-align: left;
+  }
+  .AppWrapper .addTransaction form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .AppWrapper .addTransaction form input {
+    margin: 0 5px;
+  }
+  .AppWrapper .addTransaction form input:first-of-type {
+    width: 50%;
+  }
+  .AppWrapper .addTransaction form input:nth-of-type(2) {
+    width: 30%;
+  }
+  .AppWrapper .addTransaction form input:last-of-type {
+    width: 20%;
+    padding: 0;
+  }
+}
+
+/*# sourceMappingURL=Home.module.css.map */

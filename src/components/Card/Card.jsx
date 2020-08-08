@@ -18,7 +18,7 @@ class Card extends Component {
       <div className={styles.cardWrapper} onMouseEnter={this.handleBoxToggle} onMouseLeave={this.handleBoxToggle}>
         <div className={styles.card}>
           <div>{name}</div>
-          <div>{value}</div>
+          <div>{value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</div>
           <div style={{ background: className }}></div>
         </div>
         {showBox ? (
