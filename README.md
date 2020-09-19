@@ -1,5 +1,5 @@
 # Expense Tracker ReadMe 💷 :nerd_face:
-> React Firebase Website enabling real-time communication between users on a public comment board.
+> React Firebase Website enabling the authenticated tracking of expenses and income in one place.
 
 ![picture alt](http://via.placeholder.com/200x150 "Title is optional")
 
