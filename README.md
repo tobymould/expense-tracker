@@ -17,10 +17,11 @@ __React.js | Sass | CSS3 | HTML5 | Firebase__
 
 ## :chart_with_upwards_trend: How to Use :chart_with_upwards_trend:
 ### Watch a demo :movie_camera:
-Visit my [portfolio website](https://tobymould.com/) and select the 'Expense Tracker App' project button :black_square_button: for a visual 30 second demonstration.
+Visit my [portfolio website](https://tobymould.com/) and select the __'Expense Tracker App'__ project button :black_square_button: for a visual 30 second demonstration.
 
 ### Try for yourself :raised_hands:
 1. Visit the [chatroom website](https://expense-tracker-223d5.web.app/)
 2. Log in via your google account :shipit:
-3. Add either an income source :money_with_wings: or expense (prepend with a '-:moneybag:')! 
-4. Log out 
+3. Add either an income source :money_with_wings: or expense (prepend with a '-:moneybag:') with the name of the entry!
+4. See your total left over!
+5. Log out 
