@@ -7,12 +7,19 @@
 ## :hammer: Languages/Tools :hammer::
 __React.js | Sass | CSS3 | HTML5 | Firebase__
 
-## Notable Features:
+## 🔬 Notable Features 🔬
 1. __CRUD__ - Create|Read|Update|Delete operations of both negative and positive values to an external Firebase database. :books:
 2. __Backend__ - Hosted on Firebase :fire:.
 3. __Authentication__ - Private routing :ticket: that requires Authentication :cop: to access user-specific expense tracking lists. 
 4. __Authorisation__ - User-specific collections of documents :bookmark: utilising their own metadata to load the logged in user :man: with their specific records.
 5. __Responsive Styles__ - Use of modern CSS practices using Sass preprocessor :nail_care: to make a nicely styled user interface.
 
-## How to use:
-> Visit the website at 
+## :chart_with_upwards_trend: How to Use :chart_with_upwards_trend:
+### Watch a demo :movie_camera:
+Visit my [portfolio website](https://tobymould.com/) and select the 'Expense Tracker App' project button :black_square_button: for a visual 30 second demonstration.
+
+### Try for yourself :raised_hands:
+1. Visit the [chatroom website](https://expense-tracker-223d5.web.app/)
+2. Log in via your google account :shipit:
+3. Add a message entry to say 'hi'! :wave:
+4. Log out 
